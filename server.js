@@ -13,6 +13,7 @@ app.use(express.json())
 app.use(express.static(path.join(__dirname, 'build')))
 
 // API middleware
+app.use('/api/items', require('./routes/items'))
 // app.use('/api/users', require('./routes/api/users'))
 // app.use('/api/items', require('./routes/api/items'))
 // app.use('/api/projects', require('./routes/api/projects'))
