@@ -1,4 +1,5 @@
 const Comment = require('../models/Comment')
+const Post = require('../models/Post')
 
 module.exports = {
     create,
@@ -10,8 +11,12 @@ module.exports = {
 // Create
 async function create(req, res) {
     try {
-        const createdPost = await Comment.create(req.body)
-        res.status(200).json(createdPost)
+        const createdComment = await Comment.create(req.body) // new comment
+        const { id } = req.params // the passed ID
+        const thePost = await Post.findById(id) // find the post by the id
+        thePost.comments.push(createdComment._id) // push the new comment into our post
+        thePost.save() // save
+        res.status(200).json(createdComment)
     } catch(e) {
         res.status(400).json(e)
     }

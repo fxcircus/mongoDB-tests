@@ -1,10 +1,12 @@
 const Post = require('../models/Post')
+const Comment = require('../models/Comment')
 
 module.exports = {
     create,
     getAllPosts,
     editPost,
-    deletePost
+    deletePost,
+    getOnePost
 }
 
 // Create
@@ -19,6 +21,15 @@ async function create(req, res) {
 
 // Read
 async function getAllPosts(req, res) {
+    try {
+        const posts = await Post.find({})
+        res.status(200).json(posts)
+    } catch(e) {
+        res.status(400).json(e)
+    }
+}
+
+async function getOnePost(req, res) {
     try {
         const posts = await Post.find({})
         res.status(200).json(posts)
